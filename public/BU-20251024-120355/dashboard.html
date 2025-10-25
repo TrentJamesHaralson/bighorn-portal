@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bighorn Admin Portal</title>
+  <link rel="stylesheet" href="/css/corporate/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/admin/admin.css">
+</head>
+<body>
+  <div class="sidebar">
+    <div class="sidebar-header">
+      <img src="/images/bighorn-small.png" alt="Bighorn Logo" class="sidebar-logo">
+      <span class="sidebar-title">Bighorn Admin Portal</span>
+    </div>
+    <ul class="sidebar-nav">
+      <li class="active"><a href="/dashboard.html">Dashboard</a></li>
+      <li><a href="/users.html">Users</a></li>
+      <li><a href="/vouchers.html">Vouchers</a></li>
+      <li><a href="/invoices.html">Invoices</a></li>
+      <li><a href="/accounts.html">Accounts</a></li>
+    </ul>
+  </div>
+
+  <div class="main-content">
+    <header class="main-header">
+      <h4>Dashboard Overview</h4>
+    </header>
+
+    <div class="metrics-row">
+      <div class="metric-card">
+        <h5>Total Employees</h5>
+        <p class="metric-value">132</p>
+      </div>
+      <div class="metric-card">
+        <h5>Active Vouchers</h5>
+        <p class="metric-value">89</p>
+      </div>
+      <div class="metric-card">
+        <h5>Pending Invoices</h5>
+        <p class="metric-value">14</p>
+      </div>
+      <div class="metric-card">
+        <h5>Expiring Soon</h5>
+        <p class="metric-value">6</p>
+      </div>
+    </div>
+
+    <div class="content-row">
+      <div class="content-panel">
+        <h6>Recent Users</h6>
+        <table class="table table-striped">
+          <thead>
+            <tr><th>Name</th><th>Email</th><th>Role</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Angela Packard</td><td>angela.packard@hcsinc.com</td><td>Administrative</td></tr>
+            <tr><td>Scott Ali</td><td>scali@appcraftinc.com</td><td>Administrative</td></tr>
+            <tr><td>Trent Haralson</td><td>trent@haralson-consulting.com</td><td>Administrator</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="content-panel">
+        <h6>Recent Voucher Activity</h6>
+        <table class="table table-striped">
+          <thead>
+            <tr><th>Voucher Code</th><th>Employee</th><th>Status</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>VH001</td><td>John Doe</td><td>Redeemed</td></tr>
+            <tr><td>VH002</td><td>Jane Smith</td><td>Active</td></tr>
+            <tr><td>VH003</td><td>Tom Harris</td><td>Expired</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <footer class="footer text-center">
+      <small>&copy; 2025 Bighorn Boots and Work Warehouse</small>
+    </footer>
+  </div>
+</body>
+</html>

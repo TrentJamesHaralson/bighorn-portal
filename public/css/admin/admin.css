@@ -1,0 +1,116 @@
+/* =============================
+   admin.css – for internal/dashboard pages
+   ============================= */
+
+body {
+  background-color: #f8f9fb;
+  color: #333;
+  margin: 0;
+  display: flex;
+}
+
+.sidebar {
+  width: 230px;
+  background-color: var(--bighorn-navy);
+  color: #fff;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  padding: 1rem 0;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem 1rem 1rem;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.sidebar-logo {
+  height: 28px;
+  margin-right: 8px;
+}
+
+.sidebar-title {
+  font-size: 0.85rem;
+  color: var(--bighorn-gold);
+}
+
+.sidebar-nav {
+  list-style: none;
+  padding: 0;
+  margin-top: 1rem;
+}
+
+.sidebar-nav li {
+  padding: 0.5rem 1.5rem;
+}
+
+.sidebar-nav li a {
+  text-decoration: none;
+  color: #fff;
+  display: block;
+  font-size: 0.95rem;
+}
+
+.sidebar-nav li.active, .sidebar-nav li a:hover {
+  background-color: rgba(218,165,32,0.15);
+  border-left: 3px solid var(--bighorn-gold);
+}
+
+.main-content {
+  margin-left: 230px;
+  padding: 2rem;
+  flex: 1;
+}
+
+.main-header {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 0.5rem;
+}
+
+.metrics-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.metric-card {
+  background: #fff;
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.metric-card h5 {
+  color: var(--bighorn-navy);
+  margin-bottom: 0.5rem;
+}
+
+.metric-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--bighorn-gold);
+}
+
+.content-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.content-panel {
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+.footer {
+  margin-top: 3rem;
+  color: #666;
+}

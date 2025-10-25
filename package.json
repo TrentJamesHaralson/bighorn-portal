@@ -1,0 +1,19 @@
+{
+  "name": "bighorn-portal-new",
+  "version": "1.0.0",
+  "description": "Bighorn Portal - clean PostgreSQL-only ESM build",
+  "type": "module",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.2",
+    "dotenv": "^16.6.1",
+    "express": "^4.21.2",
+    "express-session": "^1.18.2",
+    "morgan": "^1.10.1",
+    "multer": "^2.0.2",
+    "pg": "^8.16.3"
+  }
+}
