@@ -1,55 +1,27 @@
-# =====================================================================
-# Force-GitSync.ps1
-# Performs a full clean Git re-sync and force-push to GitHub
-# =====================================================================
 
-$projectDir = "C:\BighornPortal_new"
-$repoURL = "https://github.com/TrentJamesHaralson/bighorn-portal.git"
+[CmdletBinding()]
+param(
+    [string]$ProjectRoot = "C:\BighornPortal_new",
+    [string]$RepoUrl = "https://github.com/TrentJamesHaralson/bighorn-portal.git"
+)
 
-Write-Host "=== Bighorn Portal Git Force Sync ===" -ForegroundColor Cyan
+$ErrorActionPreference = "Stop"
+Write-Host "=== Force Git Sync: Bighorn Portal ===" -ForegroundColor Cyan
 
-# Move into project directory
-Set-Location $projectDir
+Set-Location $ProjectRoot
 
-# Ensure .gitignore exists
-if (!(Test-Path "$projectDir\.gitignore")) {
-    @"
-node_modules/
-.env
-*.sqlite
-uploads/
-public/BU-*
-"@ | Out-File "$projectDir\.gitignore" -Encoding utf8
-    Write-Host "Created default .gitignore" -ForegroundColor Yellow
+if (!(Test-Path ".git")) {
+    Write-Host "Initializing new Git repository..." -ForegroundColor Yellow
+    git init
+    git remote add origin $RepoUrl
 }
 
-# Step 1 - Remove any cached Git index or bad metadata
-if (Test-Path "$projectDir\.git") {
-    Write-Host "Removing existing Git cache..." -ForegroundColor Yellow
-    Remove-Item "$projectDir\.git" -Recurse -Force -ErrorAction SilentlyContinue
-}
-
-# Step 2 - Reinitialize Git repo
-Write-Host "Reinitializing Git repository..." -ForegroundColor Yellow
-git init | Out-Null
+git add .
+$commitMsg = "Automated sync from PowerShell on 2025-10-26 04:54:28"
+git commit -m $commitMsg
 git branch -M main
 
-# Step 3 - Reconnect remote origin
-Write-Host "Connecting to remote repository..." -ForegroundColor Yellow
-git remote add origin $repoURL
+Write-Host "Force pushing to GitHub..." -ForegroundColor Yellow
+git push origin main --force
 
-# Step 4 - Stage all project files
-Write-Host "Staging all project files..." -ForegroundColor Yellow
-git add .
-
-# Step 5 - Commit with timestamp
-$timestamp = Get-Date -Format "yyyy-MM-dd HH:mm:ss"
-git commit -m "Full force sync commit - $timestamp"
-
-# Step 6 - Force push to GitHub
-Write-Host "Pushing to GitHub (force overwrite)..." -ForegroundColor Yellow
-git push -u origin main --force
-
-Write-Host ""
-Write-Host "✅ Full sync completed successfully!" -ForegroundColor Green
-Write-Host "Check GitHub for updated code: $repoURL" -ForegroundColor Cyan
+Write-Host "Sync complete. Render will auto-deploy." -ForegroundColor Green

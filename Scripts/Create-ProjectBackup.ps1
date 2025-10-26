@@ -1,41 +1,18 @@
-# === Bighorn Portal Project Packager (Fixed) ===
-# Creates a clean ZIP copy of the full project (server, public, uploads, scripts)
-# Destination: C:\Auto\BHBOOT-BACKUP\BighornPortal_upload.zip
 
-$src = "C:\BighornPortal_new"
-$stage = "$env:TEMP\BighornPortal_stage"
-$destDir = "C:\Auto\BHBOOT-BACKUP"
-$zip = "$destDir\BighornPortal_upload.zip"
+[CmdletBinding()]
+param(
+    [string]$ProjectRoot = "C:\BighornPortal_new",
+    [string]$BackupDir = "C:\Auto\BHBOOT-BACKUP"
+)
 
-# Ensure destination exists
-if (!(Test-Path $destDir)) {
-    New-Item -ItemType Directory -Path $destDir | Out-Null
-}
+$ErrorActionPreference = "Stop"
+if (!(Test-Path $BackupDir)) { New-Item -ItemType Directory -Force -Path $BackupDir | Out-Null }
 
-# Clean stage
-if (Test-Path $stage) {
-    Remove-Item $stage -Recurse -Force -ErrorAction SilentlyContinue
-}
+$timestamp = Get-Date -Format "yyyyMMdd-HHmmss"
+$zipPath = Join-Path $BackupDir "BighornPortal_$timestamp.zip"
 
-# Copy project minus heavy/secret files (robocopy sometimes complains about wildcarded excludes)
-robocopy $src $stage /E `
-  /XD node_modules .git .vscode `
-  /XF .env data.sqlite *.sqlite *.zip > $null
+Write-Host "Creating backup archive..." -ForegroundColor Cyan
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+[System.IO.Compression.ZipFile]::CreateFromDirectory($ProjectRoot, $zipPath)
 
-# If the BU-* folder exists, remove it manually (robocopy can't exclude wildcards in folder names)
-$buFolder = Join-Path $stage "public"
-if (Test-Path $buFolder) {
-    Get-ChildItem -Path $buFolder -Directory -Filter "BU-*" -ErrorAction SilentlyContinue |
-        ForEach-Object { Remove-Item $_.FullName -Recurse -Force -ErrorAction SilentlyContinue }
-}
-
-# Create compressed archive
-if (Test-Path $zip) { Remove-Item $zip -Force }
-if (!(Test-Path $stage)) { throw "Error: stage directory not found." }
-
-Compress-Archive -Path "$stage\*" -DestinationPath $zip -Force
-
-Write-Host "✅ Backup created successfully:" -ForegroundColor Green
-Write-Host "    $zip" -ForegroundColor Cyan
-Write-Host ""
-Write-Host "Next step: Upload this zip file here so I can perform full code audit & repair." -ForegroundColor Yellow
+Write-Host "Backup created at $zipPath" -ForegroundColor Green

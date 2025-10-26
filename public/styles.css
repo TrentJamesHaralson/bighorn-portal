@@ -1,80 +1,14 @@
-﻿/* Light admin theme (navy/gold accents), small fonts and compact spacing */
-
 :root {
-  --brand-primary: #0b2e5b;  /* navy */
-  --brand-accent: #c9a227;   /* gold */
+  --primary: #003366;
+  --secondary: #C8A74E;
+  --text: #222222;
 }
 
-html, body {
-  height: 100%;
-}
+body { color: var(--text); }
+.logo-compact { height: 28px; }
 
-body {
-  font-size: 14px;
-}
-
-.logo-compact {
-  height: 28px;
-  width: auto;
-}
-
-.sidebar {
-  width: 240px;
-  min-height: 100vh;
-  position: sticky;
-  top: 0;
-}
-
-.sidebar .nav-link {
-  color: #334155;
-  border-radius: .375rem;
-  padding: .5rem .75rem;
-}
-
-.sidebar .nav-link:hover {
-  background: #f1f5f9;
-}
-
-.sidebar .nav-link.active {
-  background: rgba(11,46,91,0.08);
-  color: var(--brand-primary);
-  font-weight: 600;
-}
-
-.main {
-  min-height: 100vh;
-}
-
-.card .card-header {
-  background: #fff;
-}
-
-.badge.bg-outline-secondary {
-  color: #64748b;
-  border: 1px solid #cbd5e1;
-  background: transparent;
-}
-
-/* Buttons with subtle brand accent */
-.btn-primary {
-  background-color: var(--brand-primary);
-  border-color: var(--brand-primary);
-}
-.btn-primary:hover {
-  background-color: #08325f;
-  border-color: #08325f;
-}
-
-/* Table tweaks */
-.table > :not(caption) > * > * {
-  padding: .6rem .75rem;
-}
-
-/* Responsive tweaks */
-@media (max-width: 992px) {
-  .sidebar {
-    position: static;
-    width: 100%;
-    min-height: auto;
-  }
-}
+.sidebar { width: 240px; min-height: 100vh; }
+.nav-link { color: #333; }
+.nav-link.active, .nav-link:hover { color: var(--primary); }
+.btn-primary { background: var(--primary); border-color: var(--primary); }
+.badge.text-bg-primary { background: var(--primary) !important; }

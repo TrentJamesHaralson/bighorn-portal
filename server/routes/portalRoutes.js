@@ -1,30 +1,23 @@
-// server/routes/portalRoutes.js (ESM, PostgreSQL health and status endpoints)
+// Health & info endpoints
 import express from "express";
 import { query } from "../db.js";
 
 const router = express.Router();
 
-// Simple health check
 router.get("/health", async (req, res) => {
   try {
     const dbCheck = await query("SELECT NOW()");
-    res.status(200).json({
-      status: "ok",
-      db: "connected",
-      time: dbCheck[0].now,
-    });
-  } catch (err) {
-    console.error("[HEALTH ERROR]", err.message);
-    res.status(500).json({ status: "error", db: "disconnected" });
+    res.json({ ok: true, db: "connected", time: dbCheck[0].now });
+  } catch (e) {
+    res.status(500).json({ ok: false, db: "disconnected" });
   }
 });
 
-// Optional info route
 router.get("/info", (req, res) => {
   res.json({
     app: "Bighorn Portal API",
     version: "1.0.0",
-    environment: process.env.NODE_ENV || "development",
+    env: process.env.NODE_ENV || "development"
   });
 });
 

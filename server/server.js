@@ -15,45 +15,72 @@ import portalRoutes from "./routes/portalRoutes.js";
 
 dotenv.config();
 
-const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.urlencoded({ extended: true }));
+const app = express();
+const NODE_ENV = process.env.NODE_ENV || "development";
+const isProd = NODE_ENV === "production";
+
+// Trust proxy is REQUIRED on Render/behind load balancers so cookies stick
+app.set("trust proxy", 1);
+
+app.use(morgan(isProd ? "combined" : "dev"));
 app.use(express.json());
-app.use(morgan("dev"));
+app.use(express.urlencoded({ extended: true }));
 
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || "secret",
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-    },
-  })
-);
+// Basic session (MemoryStore for now). Consider connect-pg-simple for production.
+app.use(session({
+  name: "bhp.sid",
+  secret: process.env.SESSION_SECRET || "change-me",
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: true,
+    sameSite: "lax",
+    secure: isProd,
+    maxAge: 1000 * 60 * 60 * 8
+  }
+}));
 
-// Serve static assets
+// Optional: force HTTPS in production (Render usually forwards https)
+if (isProd) {
+  app.use((req, res, next) => {
+    if (req.headers["x-forwarded-proto"] !== "https") {
+      return res.redirect(301, `https://${req.headers.host}${req.originalUrl}`);
+    }
+    next();
+  });
+}
+
+// Static assets
 app.use(express.static(path.join(__dirname, "../public")));
 
-// Primary routes
+// Health + info
+app.use("/api", portalRoutes);
+
+// API
 app.use("/api/accounts", accountsApi);
 app.use("/api/users", usersApi);
 app.use("/api/invoices", invoicesApi);
-app.use("/api", portalRoutes); // /api/health etc.
+app.use("/api/shopify", (await import('./routes/shopify.js')).default);
+
+
+// Page routes
 app.use("/", authRoutes);
 app.use("/dashboard", dashboardRoutes);
 app.use("/vouchers", vouchersRoutes);
 
-// Root redirect (Fixes 404 at /)
-app.get("/", (req, res) => {
-  res.redirect("/login");
-});
+// Root -> /login
+app.get("/", (req, res) => res.redirect("/login"));
 
-// Fallback for unmatched routes
+// Hard routes for direct loads to avoid 404 on refresh
+app.get("/accounts", (req, res) => res.sendFile(path.join(__dirname, "../public/accounts.html")));
+app.get("/users",    (req, res) => res.sendFile(path.join(__dirname, "../public/users.html")));
+app.get("/invoices", (req, res) => res.sendFile(path.join(__dirname, "../public/invoices.html")));
+
+// 404 fallback
 app.use((req, res) => res.status(404).send("Page not found"));
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => console.log(`Bighorn Portal listening on :${PORT} (${NODE_ENV})`));

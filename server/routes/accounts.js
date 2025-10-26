@@ -1,18 +1,15 @@
-﻿import express from "express";
+import express from "express";
 import { query } from "../db.js";
+import { authRequired } from "./auth.js";
 
 const router = express.Router();
 
-// GET /api/accounts
-router.get("/", async (_req, res) => {
+router.get("/", authRequired, async (req, res) => {
   try {
-    const rows = await query(
-      "SELECT id, name, contact_email, created_at FROM accounts ORDER BY name ASC;"
-    );
-    res.json({ success: true, data: rows });
-  } catch (err) {
-    console.error("[accounts] list error:", err);
-    res.status(500).json({ success: false, error: "Failed to list accounts" });
+    const rows = await query("SELECT id, name, contact_email, created_at FROM accounts ORDER BY name ASC");
+    res.json(rows);
+  } catch (e) {
+    res.status(500).json({ error: "Failed to load accounts" });
   }
 });
 

@@ -1,8 +1,0 @@
-=== Bighorn Portal Full Endpoint Test ===
-OK GET http://localhost:3000/api/health
-OK GET http://localhost:3000/api/info
-OK GET http://localhost:3000/api/accounts
-OK GET http://localhost:3000/api/users
-OK GET http://localhost:3000/api/invoices
-OK GET http://localhost:3000/vouchers
-OK GET http://localhost:3000/dashboard
