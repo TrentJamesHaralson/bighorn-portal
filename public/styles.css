@@ -4,11 +4,54 @@
   --text: #222222;
 }
 
-body { color: var(--text); }
-.logo-compact { height: 28px; }
+body {
+  background-color: #f6f6f6;
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
 
-.sidebar { width: 240px; min-height: 100vh; }
-.nav-link { color: #333; }
-.nav-link.active, .nav-link:hover { color: var(--primary); }
-.btn-primary { background: var(--primary); border-color: var(--primary); }
-.badge.text-bg-primary { background: var(--primary) !important; }
+.login-card {
+  background-color: #fff;
+  width: 380px;
+  min-height: 460px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Buttons */
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: #002855;
+  border-color: #002855;
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #b6933c;
+  border-color: #b6933c;
+}
+
+/* Input focus style */
+.form-control:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 0.2rem rgba(200, 167, 78, 0.25);
+}
+
+/* Responsive tuning */
+@media (max-width: 480px) {
+  .login-card {
+    width: 90%;
+    padding: 24px;
+  }
+}

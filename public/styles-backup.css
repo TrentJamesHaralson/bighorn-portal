@@ -1,0 +1,14 @@
+:root {
+  --primary: #003366;
+  --secondary: #C8A74E;
+  --text: #222222;
+}
+
+body { color: var(--text); }
+.logo-compact { height: 28px; }
+
+.sidebar { width: 240px; min-height: 100vh; }
+.nav-link { color: #333; }
+.nav-link.active, .nav-link:hover { color: var(--primary); }
+.btn-primary { background: var(--primary); border-color: var(--primary); }
+.badge.text-bg-primary { background: var(--primary) !important; }
