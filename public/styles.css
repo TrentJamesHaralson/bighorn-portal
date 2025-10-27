@@ -1,5 +1,5 @@
 :root {
-  --primary: #003366;
+  --primary: #002855;     /* Navy blue from login screen */
   --secondary: #C8A74E;
   --text: #222222;
 }
@@ -26,18 +26,51 @@ body {
 /* GLOBAL LOGO (used on all pages except login) */
 .logo-compact {
   display: inline-block;
-  height: 45px;           /* scaled consistent height */
+  height: 85px;          /* increased size substantially */
   width: auto;
   margin: 10px 0 10px 15px;
   vertical-align: middle;
   opacity: 0.95;
+  border: none;          /* remove any line effect */
 }
 
-@media (max-width: 768px) {
-  .logo-compact {
-    height: 38px;
-    margin: 8px 0 8px 12px;
-  }
+/* Remove text next to logo (if any) */
+.header-logo h1,
+.header-logo span,
+.header-logo p {
+  display: none !important;
+}
+
+/* Remove border/line under header if present */
+.header-logo,
+.navbar,
+.sidebar-header {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* NAVIGATION (Sidebar and links) */
+.sidebar,
+.nav {
+  color: var(--primary);
+}
+
+.sidebar a,
+.nav a {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.sidebar a:hover,
+.nav a:hover {
+  color: var(--secondary);
+}
+
+/* TABLE HEADERS AND LABELS */
+.table thead {
+  background-color: #f0f2f5;
+  color: var(--primary);
+  font-weight: 600;
 }
 
 /* BUTTONS */
@@ -47,8 +80,8 @@ body {
 }
 
 .btn-primary:hover {
-  background-color: #002855;
-  border-color: #002855;
+  background-color: #001f4d;
+  border-color: #001f4d;
 }
 
 .btn-secondary {
@@ -82,12 +115,13 @@ h1, h2, h3 {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
-.table thead {
-  background-color: #f0f2f5;
-  font-weight: 600;
+/* RESPONSIVE TUNING */
+@media (max-width: 768px) {
+  .logo-compact {
+    height: 70px;         /* smaller for tablets */
+  }
 }
 
-/* RESPONSIVE TUNING */
 @media (max-width: 480px) {
   .login-card {
     width: 90%;
