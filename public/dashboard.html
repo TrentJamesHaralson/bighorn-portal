@@ -10,25 +10,55 @@
     body {
       background-color: #ffffff;
       font-family: "Segoe UI", sans-serif;
+      overflow-x: hidden;
     }
 
+    /* Layout Containers */
     .dashboard-container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 90vh;
+      min-height: 100vh;
+      position: relative;
+      padding-top: 100px;
     }
 
+    /* Logo Top Right */
     .header-logo {
-      height: 70px;
-      margin-bottom: 1.5rem;
+      position: absolute;
+      top: 25px;
+      right: 80px;
+      height: 90px;
     }
 
+    /* Logout Icon Top Right */
+    .logout-icon {
+      position: absolute;
+      top: 35px;
+      right: 25px;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+    .logout-icon:hover {
+      transform: scale(1.15);
+    }
+
+    /* Heading */
+    h1 {
+      font-weight: 700;
+      color: #000;
+      margin-bottom: 50px;
+      text-align: center;
+    }
+
+    /* Grid of Icons */
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 40px;
+      gap: 50px;
       justify-items: center;
       align-items: center;
       max-width: 700px;
@@ -47,26 +77,35 @@
     }
 
     .dashboard-tile img {
-      width: 100px;
-      height: 100px;
+      width: 110px;
+      height: 110px;
       object-fit: contain;
-      transition: transform 0.25s ease;
-    }
-
-    .dashboard-tile:hover img {
-      transform: scale(1.05);
     }
 
     .dashboard-tile h5 {
       margin-top: 10px;
-      color: #0b2e4f;
+      color: #000;
       font-weight: 600;
       font-size: 1rem;
     }
 
     @media (max-width: 600px) {
+      .header-logo {
+        right: 60px;
+        height: 70px;
+      }
+      .logout-icon {
+        width: 35px;
+        height: 35px;
+        top: 30px;
+        right: 15px;
+      }
+      h1 {
+        font-size: 1.3rem;
+        margin-bottom: 40px;
+      }
       .dashboard-grid {
-        gap: 30px;
+        gap: 35px;
       }
       .dashboard-tile img {
         width: 80px;
@@ -78,8 +117,11 @@
 <body>
 
   <div class="dashboard-container">
+    <!-- Top Right Logo and Logout -->
     <img src="/images/bighorn-small.png" alt="Bighorn Logo" class="header-logo">
-    <h1 class="h4 fw-bold text-secondary mb-4">Welcome to the Bighorn Portal</h1>
+    <a href="/logout"><img src="/images/icon-logout.png" alt="Logout" class="logout-icon"></a>
+
+    <h1>Welcome to the Bighorn Portal</h1>
 
     <div class="dashboard-grid">
       <a href="/accounts" class="dashboard-tile text-decoration-none">
@@ -92,19 +134,14 @@
         <h5>Users</h5>
       </a>
 
-      <a href="/invoices" class="dashboard-tile text-decoration-none">
-        <img src="/images/icon-invoices.png" alt="Invoices">
-        <h5>Invoices</h5>
-      </a>
-
       <a href="/vouchers" class="dashboard-tile text-decoration-none">
         <img src="/images/icon-vouchers.png" alt="Vouchers">
         <h5>Vouchers</h5>
       </a>
 
-      <a href="/logout" class="dashboard-tile text-decoration-none">
-        <img src="/images/icon-logout.png" alt="Logout">
-        <h5>Logout</h5>
+      <a href="/invoices" class="dashboard-tile text-decoration-none">
+        <img src="/images/icon-invoices.png" alt="Invoices">
+        <h5>Invoices</h5>
       </a>
     </div>
   </div>
