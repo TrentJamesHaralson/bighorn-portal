@@ -15,41 +15,42 @@
       padding: 0;
     }
 
-    /* Bighorn logo (top right) */
+    /* Bighorn logo (top-left corner) */
     .header-logo {
       position: absolute;
       top: 15px;
-      right: 20px;
-      height: 140px;
+      left: 20px;
+      height: 120px;
       width: auto;
     }
 
-    /* Logout icon next to logo */
+    /* Logout icon (top-right corner) */
     .logout-icon {
       position: absolute;
       top: 25px;
-      right: 170px;
+      right: 25px;
       width: 38px;
       height: 38px;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
+
     .logout-icon:hover {
       transform: scale(1.15);
     }
 
-    /* Dashboard layout */
+    /* Dashboard container */
     .dashboard-container {
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       min-height: 100vh;
       text-align: center;
-      padding-top: 150px;
+      padding-top: 160px; /* moves grid up */
     }
 
-    /* Icon grid – 4 columns */
+    /* Icon grid (4 columns) */
     .dashboard-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -60,7 +61,7 @@
       width: 100%;
     }
 
-    /* Tile design */
+    /* Tiles (no boxes, transparent) */
     .dashboard-tile {
       background: transparent;
       border: none;
@@ -85,7 +86,7 @@
       font-size: 1rem;
     }
 
-    /* Responsive grid for smaller screens */
+    /* Responsive adjustments */
     @media (max-width: 992px) {
       .dashboard-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -93,14 +94,12 @@
       }
 
       .header-logo {
-        height: 100px;
-        top: 15px;
-        right: 15px;
+        height: 90px;
+        top: 10px;
+        left: 10px;
       }
 
       .logout-icon {
-        top: 20px;
-        right: 110px;
         width: 32px;
         height: 32px;
       }
@@ -121,16 +120,15 @@
 </head>
 <body>
 
-  <!-- Top Right Bighorn Logo -->
+  <!-- Top Left Bighorn Logo -->
   <img src="/images/bighorn-small.png" alt="Bighorn Logo" class="header-logo">
 
-  <!-- Logout Icon -->
+  <!-- Logout Icon (Top Right) -->
   <a href="/logout"><img src="/images/icon-logout.png" alt="Logout" class="logout-icon"></a>
 
   <!-- Dashboard Grid -->
   <div class="dashboard-container">
     <div class="dashboard-grid">
-
       <a href="/accounts" class="dashboard-tile text-decoration-none">
         <img src="/images/icon-accounts.png" alt="Accounts">
         <h5>Accounts</h5>
@@ -150,7 +148,6 @@
         <img src="/images/icon-invoices.png" alt="Invoices">
         <h5>Invoices</h5>
       </a>
-
     </div>
   </div>
 
