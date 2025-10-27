@@ -1,54 +1,74 @@
 import express from "express";
 import multer from "multer";
 import path from "path";
+import fs from "fs";
 import { query } from "../db.js";
 
 const router = express.Router();
 
-// Configure Multer for uploads
+// Ensure upload directory exists at startup
+const uploadDir = path.join(process.cwd(), "uploads", "invoices");
+fs.mkdirSync(uploadDir, { recursive: true });
+
+// Configure Multer for invoice uploads
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, path.join(process.cwd(), "uploads/invoices"));
+    cb(null, uploadDir);
   },
   filename: (req, file, cb) => {
-    const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
-    cb(null, `${uniqueSuffix}-${file.originalname}`);
+    const uniqueName = `${Date.now()}-${file.originalname}`;
+    cb(null, uniqueName);
   },
 });
 
 const upload = multer({ storage });
 
-// GET all invoices
+// GET /api/invoices
 router.get("/", async (req, res) => {
   try {
     const rows = await query(
-      "SELECT id, account_id, status, total, created_at, file_name FROM invoices ORDER BY created_at DESC"
+      `SELECT id, account_id, status, total, created_at, file_name
+       FROM invoices
+       ORDER BY created_at DESC`
     );
     res.json(rows);
   } catch (err) {
     console.error("[INVOICES] Fetch error:", err);
-    res.status(500).send("Server error");
+    res.status(500).json({ error: "Failed to load invoices." });
   }
 });
 
-// POST /upload - handle QuickBooks file upload
-router.post("/upload", upload.single("invoiceFile"), async (req, res) => {
+// POST /api/invoices/upload
+router.post("/upload", upload.single("file"), async (req, res) => {
   try {
-    const file = req.file;
-    if (!file) return res.status(400).send("No file uploaded.");
+    if (!req.file) {
+      return res.status(400).json({ error: "No file uploaded" });
+    }
 
-    // Insert file metadata into DB
+    const filePath = req.file.path;
+    const fileName = req.file.originalname;
+    const newId = Date.now().toString();
+
     await query(
-      `INSERT INTO invoices (account_id, status, total, created_at, file_name)
-       VALUES (NULL, 'Uploaded', 0, NOW(), $1)`,
-      [file.filename]
+      `INSERT INTO invoices (id, account_id, status, total, created_at, file_name)
+       VALUES ($1, NULL, 'Uploaded', 0, CURRENT_TIMESTAMP, $2)`,
+      [newId, fileName]
     );
 
-    console.log(`[UPLOAD] Invoice file saved: ${file.filename}`);
-    res.status(200).json({ success: true, file: file.filename });
+    res.status(200).json({ message: "Invoice uploaded successfully!" });
   } catch (err) {
     console.error("[INVOICES] Upload error:", err);
-    res.status(500).send("Upload failed");
+    res.status(500).json({ error: "Failed to upload invoice." });
+  }
+});
+
+// Serve static uploaded files
+router.get("/files/:name", (req, res) => {
+  const filePath = path.join(uploadDir, req.params.name);
+  if (fs.existsSync(filePath)) {
+    res.sendFile(filePath);
+  } else {
+    res.status(404).send("File not found");
   }
 });
 
