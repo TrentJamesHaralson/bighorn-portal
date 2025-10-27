@@ -1,0 +1,130 @@
+:root {
+  --primary: #002855;     /* Navy blue from login screen */
+  --secondary: #C8A74E;
+  --text: #222222;
+}
+
+body {
+  background-color: #f6f6f6;
+  color: var(--text);
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* LOGIN PAGE CARD */
+.login-card {
+  background-color: #fff;
+  width: 380px;
+  min-height: 460px;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
+}
+
+/* GLOBAL LOGO (used on all pages except login) */
+.logo-compact {
+  display: inline-block;
+  height: 85px;          /* increased size substantially */
+  width: auto;
+  margin: 10px 0 10px 15px;
+  vertical-align: middle;
+  opacity: 0.95;
+  border: none;          /* remove any line effect */
+}
+
+/* Remove text next to logo (if any) */
+.header-logo h1,
+.header-logo span,
+.header-logo p {
+  display: none !important;
+}
+
+/* Remove border/line under header if present */
+.header-logo,
+.navbar,
+.sidebar-header {
+  border-bottom: none !important;
+  box-shadow: none !important;
+}
+
+/* NAVIGATION (Sidebar and links) */
+.sidebar,
+.nav {
+  color: var(--primary);
+}
+
+.sidebar a,
+.nav a {
+  color: var(--primary);
+  font-weight: 500;
+}
+
+.sidebar a:hover,
+.nav a:hover {
+  color: var(--secondary);
+}
+
+/* TABLE HEADERS AND LABELS */
+.table thead {
+  background-color: #f0f2f5;
+  color: var(--primary);
+  font-weight: 600;
+}
+
+/* BUTTONS */
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+}
+
+.btn-primary:hover {
+  background-color: #001f4d;
+  border-color: #001f4d;
+}
+
+.btn-secondary {
+  background-color: var(--secondary);
+  border-color: var(--secondary);
+  color: #fff;
+}
+
+.btn-secondary:hover {
+  background-color: #b6933c;
+  border-color: #b6933c;
+}
+
+/* INPUT FOCUS STYLE */
+.form-control:focus {
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 0.2rem rgba(200, 167, 78, 0.25);
+}
+
+/* PAGE HEADERS */
+h1, h2, h3 {
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* TABLES */
+.table {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+/* RESPONSIVE TUNING */
+@media (max-width: 768px) {
+  .logo-compact {
+    height: 70px;         /* smaller for tablets */
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    width: 90%;
+    padding: 24px;
+  }
+}
