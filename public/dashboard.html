@@ -11,60 +11,58 @@
       background-color: #ffffff;
       font-family: "Segoe UI", sans-serif;
       overflow-x: hidden;
+      margin: 0;
+      padding: 0;
     }
 
-    /* Layout Containers */
-    .dashboard-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      position: relative;
-      padding-top: 100px;
-    }
-
-    /* Logo Top Right */
+    /* Top Left Bighorn Logo */
     .header-logo {
       position: absolute;
-      top: 25px;
-      right: 80px;
-      height: 90px;
+      top: 30px;
+      left: 60px;
+      height: 220px;
+      width: auto;
     }
 
     /* Logout Icon Top Right */
     .logout-icon {
       position: absolute;
       top: 35px;
-      right: 25px;
+      right: 35px;
       width: 40px;
       height: 40px;
       cursor: pointer;
       transition: transform 0.2s ease;
     }
+
     .logout-icon:hover {
       transform: scale(1.15);
     }
 
-    /* Heading */
-    h1 {
-      font-weight: 700;
-      color: #000;
-      margin-bottom: 50px;
+    /* Dashboard Layout */
+    .dashboard-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
       text-align: center;
+      position: relative;
+      padding-top: 120px;
     }
 
-    /* Grid of Icons */
+    /* Icon Grid */
     .dashboard-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-      gap: 50px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 60px 80px;
       justify-items: center;
       align-items: center;
-      max-width: 700px;
-      width: 100%;
+      max-width: 800px;
+      margin-top: 60px;
     }
 
+    /* Make all icons visually consistent */
     .dashboard-tile {
       background: transparent;
       border: none;
@@ -77,8 +75,8 @@
     }
 
     .dashboard-tile img {
-      width: 110px;
-      height: 110px;
+      width: 130px;
+      height: 130px;
       object-fit: contain;
     }
 
@@ -89,40 +87,46 @@
       font-size: 1rem;
     }
 
-    @media (max-width: 600px) {
+    /* Force invoices lower and align visually to mockup */
+    .invoice-tile {
+      grid-column: 2; /* middle column */
+      grid-row: 2; /* second row */
+    }
+
+    @media (max-width: 768px) {
       .header-logo {
-        right: 60px;
-        height: 70px;
+        height: 140px;
+        top: 20px;
+        left: 40px;
       }
+
       .logout-icon {
         width: 35px;
         height: 35px;
-        top: 30px;
-        right: 15px;
       }
-      h1 {
-        font-size: 1.3rem;
-        margin-bottom: 40px;
-      }
+
       .dashboard-grid {
-        gap: 35px;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 40px 50px;
       }
+
       .dashboard-tile img {
-        width: 80px;
-        height: 80px;
+        width: 90px;
+        height: 90px;
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- Bighorn Logo (Top Left) -->
+  <img src="/images/bighorn-small.png" alt="Bighorn Logo" class="header-logo">
+
+  <!-- Logout Icon (Top Right) -->
+  <a href="/logout"><img src="/images/icon-logout.png" alt="Logout" class="logout-icon"></a>
+
+  <!-- Dashboard -->
   <div class="dashboard-container">
-    <!-- Top Right Logo and Logout -->
-    <img src="/images/bighorn-small.png" alt="Bighorn Logo" class="header-logo">
-    <a href="/logout"><img src="/images/icon-logout.png" alt="Logout" class="logout-icon"></a>
-
-    <h1>Welcome to the Bighorn Portal</h1>
-
     <div class="dashboard-grid">
       <a href="/accounts" class="dashboard-tile text-decoration-none">
         <img src="/images/icon-accounts.png" alt="Accounts">
@@ -139,7 +143,7 @@
         <h5>Vouchers</h5>
       </a>
 
-      <a href="/invoices" class="dashboard-tile text-decoration-none">
+      <a href="/invoices" class="dashboard-tile invoice-tile text-decoration-none">
         <img src="/images/icon-invoices.png" alt="Invoices">
         <h5>Invoices</h5>
       </a>
