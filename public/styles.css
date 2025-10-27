@@ -10,6 +10,7 @@ body {
   font-family: "Segoe UI", Arial, sans-serif;
 }
 
+/* LOGIN PAGE CARD */
 .login-card {
   background-color: #fff;
   width: 380px;
@@ -18,9 +19,28 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
 }
 
-/* Buttons */
+/* GLOBAL LOGO (used on all pages except login) */
+.logo-compact {
+  display: inline-block;
+  height: 45px;           /* scaled consistent height */
+  width: auto;
+  margin: 10px 0 10px 15px;
+  vertical-align: middle;
+  opacity: 0.95;
+}
+
+@media (max-width: 768px) {
+  .logo-compact {
+    height: 38px;
+    margin: 8px 0 8px 12px;
+  }
+}
+
+/* BUTTONS */
 .btn-primary {
   background-color: var(--primary);
   border-color: var(--primary);
@@ -42,13 +62,32 @@ body {
   border-color: #b6933c;
 }
 
-/* Input focus style */
+/* INPUT FOCUS STYLE */
 .form-control:focus {
   border-color: var(--secondary);
   box-shadow: 0 0 0 0.2rem rgba(200, 167, 78, 0.25);
 }
 
-/* Responsive tuning */
+/* PAGE HEADERS */
+h1, h2, h3 {
+  color: var(--primary);
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* TABLES */
+.table {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.table thead {
+  background-color: #f0f2f5;
+  font-weight: 600;
+}
+
+/* RESPONSIVE TUNING */
 @media (max-width: 480px) {
   .login-card {
     width: 90%;
