@@ -9,11 +9,11 @@ const { Pool } = pkg;
 
 // Validate environment
 if (!process.env.DATABASE_URL) {
-  console.error("❌ DATABASE_URL missing in environment.");
+  console.error("DATABASE_URL missing in environment.");
   process.exit(1);
 }
 if (!process.env.ADMIN_USER || !process.env.ADMIN_PASS) {
-  console.error("❌ ADMIN_USER or ADMIN_PASS missing in environment.");
+  console.error(" ADMIN_USER or ADMIN_PASS missing in environment.");
   process.exit(1);
 }
 
@@ -68,7 +68,7 @@ async function seedAdmin() {
          WHERE lower(email) = lower($3)`,
         [hash, role, email]
       );
-      console.log("✅ Existing admin user updated successfully.");
+      console.log("Existing admin user updated successfully.");
     } else {
       const newId = randomUUID();
       await pool.query(
@@ -76,10 +76,10 @@ async function seedAdmin() {
          VALUES ($1, $2, $3, $4, 1)`,
         [newId, email, hash, role]
       );
-      console.log("✅ New admin user inserted successfully.");
+      console.log("New admin user inserted successfully.");
     }
   } catch (err) {
-    console.error("❌ Error seeding admin user:", err);
+    console.error("Error seeding admin user:", err);
   } finally {
     await pool.end();
   }

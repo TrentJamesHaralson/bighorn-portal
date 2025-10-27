@@ -1,99 +1,169 @@
+<!-- public/invoices.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="utf-8" />
   <title>Invoices - Bighorn Portal</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <div class="container mt-4">
-    <img src="/images/bighorn-small.png" alt="Bighorn Logo" class="logo-compact">
-    <h1 class="mt-3 mb-4 text-primary">Invoices</h1>
+  <nav class="navbar navbar-light bg-white border-bottom px-3">
+    <img src="/images/bighorn-small.png" alt="Bighorn" class="logo-compact" />
+    <div class="ms-auto">
+      <a href="/dashboard" class="btn btn-link">Dashboard</a>
+      <a href="/invoices" class="btn btn-link fw-bold">Invoices</a>
+      <a href="/vouchers" class="btn btn-link">Vouchers</a>
+      <a href="/logout" class="btn btn-outline-secondary ms-2">Logout</a>
+    </div>
+  </nav>
 
-    <!-- QuickBooks Upload Form -->
-    <div class="card mb-4 shadow-sm">
-      <div class="card-body">
-        <h5 class="card-title">Upload QuickBooks Invoice</h5>
-        <form id="uploadForm" enctype="multipart/form-data" class="row g-3">
-          <div class="col-md-8">
-            <input type="file" id="invoiceFile" name="invoiceFile" class="form-control" accept=".csv,.xlsx,.xls,.pdf" required>
-          </div>
-          <div class="col-md-4">
-            <button type="submit" class="btn btn-primary w-100">Upload</button>
-          </div>
-        </form>
-      </div>
+  <div class="container py-4">
+    <div class="d-flex align-items-center justify-content-between mb-3">
+      <h1 class="h4 m-0">Invoices</h1>
+      <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#uploadModal">Upload Invoice</button>
     </div>
 
-    <!-- Invoice Table -->
     <div class="card">
       <div class="card-body">
-        <h5 class="card-title">Existing Invoices</h5>
-        <div class="table-responsive">
-          <table class="table table-striped align-middle" id="invoiceTable">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-4">
+            <label class="form-label">Filter by Account</label>
+            <select id="accountFilter" class="form-select"></select>
+          </div>
+          <div class="col-md-3">
+            <button id="refreshBtn" class="btn btn-outline-primary">Refresh</button>
+          </div>
+        </div>
+
+        <div class="table-responsive mt-3">
+          <table class="table table-sm align-middle">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Account ID</th>
-                <th>Status</th>
-                <th>Total</th>
                 <th>Created</th>
+                <th>Account</th>
+                <th>Status</th>
+                <th class="text-end">Total</th>
                 <th>File</th>
+                <th style="width:90px"></th>
               </tr>
             </thead>
-            <tbody id="invoiceBody">
-              <!-- Populated dynamically -->
-            </tbody>
+            <tbody id="invoiceRows"></tbody>
           </table>
         </div>
       </div>
     </div>
   </div>
 
-  <script>
-    // Fetch existing invoices
-    async function loadInvoices() {
-      try {
-        const res = await fetch("/api/invoices");
-        const invoices = await res.json();
-        const tableBody = document.getElementById("invoiceBody");
-        tableBody.innerHTML = "";
+  <!-- Upload Modal -->
+  <div class="modal fade" id="uploadModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+      <form id="uploadForm" class="modal-content" enctype="multipart/form-data">
+        <div class="modal-header">
+          <h5 class="modal-title">Upload Invoice</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="mb-3">
+            <label class="form-label">Account</label>
+            <select id="account_id" name="account_id" class="form-select" required></select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Status</label>
+            <select id="status" name="status" class="form-select">
+              <option value="Uploaded">Uploaded</option>
+              <option value="unbilled">Unbilled</option>
+              <option value="current">Current</option>
+              <option value="past_due">Past Due</option>
+            </select>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Total</label>
+            <input type="number" step="0.01" id="total" name="total" class="form-control" placeholder="0.00" />
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Invoice File (PDF/CSV)</label>
+            <input type="file" id="invoiceFile" name="invoiceFile" class="form-control" accept=".pdf,.csv" required />
+          </div>
+          <div class="small text-muted">Files are stored on the server and linked to the selected account.</div>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" data-bs-dismiss="modal" type="button">Cancel</button>
+          <button class="btn btn-primary" type="submit">Upload</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
-        invoices.forEach(inv => {
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td>${inv.id}</td>
-            <td>${inv.account_id ?? "-"}</td>
-            <td>${inv.status}</td>
-            <td>$${inv.total?.toFixed(2) ?? "0.00"}</td>
-            <td>${new Date(inv.created_at).toLocaleString()}</td>
-            <td>${inv.file_name ? `<a href="/uploads/invoices/${inv.file_name}" target="_blank">${inv.file_name}</a>` : "-"}</td>
-          `;
-          tableBody.appendChild(tr);
-        });
-      } catch (err) {
-        console.error("Error loading invoices:", err);
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    async function fetchJSON(url) {
+      const r = await fetch(url);
+      if (!r.ok) throw new Error(await r.text());
+      return r.json();
+    }
+
+    async function loadAccounts() {
+      // Reuse your existing accounts endpoint if you have one; otherwise query corporate_accounts
+      const rows = await fetchJSON("/api/accounts?scope=corporate");
+      const sel = document.getElementById("accountFilter");
+      const sel2 = document.getElementById("account_id");
+      sel.innerHTML = '<option value="">All Accounts</option>';
+      sel2.innerHTML = "";
+      for (const a of rows) {
+        const opt1 = document.createElement("option");
+        opt1.value = a.id; opt1.textContent = a.name;
+        sel.appendChild(opt1);
+        const opt2 = document.createElement("option");
+        opt2.value = a.id; opt2.textContent = a.name;
+        sel2.appendChild(opt2);
       }
     }
 
-    // Handle upload form
+    async function loadInvoices() {
+      const account = document.getElementById("accountFilter").value;
+      const url = account ? `/api/invoices?account_id=${encodeURIComponent(account)}` : "/api/invoices";
+      const rows = await fetchJSON(url);
+      const tbody = document.getElementById("invoiceRows");
+      tbody.innerHTML = "";
+      for (const r of rows) {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${r.created_at || ""}</td>
+          <td>${r.account_name || r.account_id}</td>
+          <td>${r.status}</td>
+          <td class="text-end">${Number(r.total || 0).toFixed(2)}</td>
+          <td>${r.file_name || ""}</td>
+          <td class="text-end">
+            ${r.file_name ? `<a class="btn btn-sm btn-outline-primary" href="/api/invoices/${r.id}/file">View</a>` : ""}
+          </td>
+        `;
+        tbody.appendChild(tr);
+      }
+    }
+
+    document.getElementById("refreshBtn").addEventListener("click", loadInvoices);
+    document.getElementById("accountFilter").addEventListener("change", loadInvoices);
+
     document.getElementById("uploadForm").addEventListener("submit", async (e) => {
       e.preventDefault();
-      const formData = new FormData();
-      formData.append("invoiceFile", document.getElementById("invoiceFile").files[0]);
-
-      const response = await fetch("/api/invoices/upload", { method: "POST", body: formData });
-      if (response.ok) {
-        alert("Invoice uploaded successfully!");
-        loadInvoices();
+      const formData = new FormData(e.target);
+      const res = await fetch("/api/invoices/upload", { method: "POST", body: formData });
+      if (res.ok) {
+        e.target.reset();
+        const modal = bootstrap.Modal.getInstance(document.getElementById("uploadModal"));
+        modal.hide();
+        await loadInvoices();
       } else {
-        alert("Upload failed. Please try again.");
+        alert("Upload failed: " + (await res.text()));
       }
     });
 
-    loadInvoices();
+    (async function init() {
+      await loadAccounts();
+      await loadInvoices();
+    })();
   </script>
 </body>
 </html>
