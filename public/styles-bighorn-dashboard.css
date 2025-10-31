@@ -1,0 +1,196 @@
+:root{
+  --bg-dark:#0e0e0f;
+  --bg-panel:rgba(18,18,20,0.72);
+  --bg-glass:rgba(20,20,22,0.45);
+  --line:rgba(255,255,255,0.14);
+  --gold:#c8a74e;
+  --gold-2:#b89642;
+  --gold-3:#e4be46;
+  --text:#ffffff;
+  --text-dim:rgba(255,255,255,0.82);
+  --muted:rgba(255,255,255,0.65);
+  --ok:#33cc99;
+  --warn:#ffbb55;
+  --err:#ff6b6b;
+  --radius:12px;
+  --shadow:0 10px 28px rgba(0,0,0,0.35);
+  --shadow-sm:0 6px 16px rgba(0,0,0,0.30);
+  --font:"Segoe UI", Arial, sans-serif;
+}
+
+body.bh-dashboard{
+  margin:0;
+  font-family:var(--font);
+  color:var(--text);
+  background:url("/images/bighorn-wallpaper2.png") no-repeat center center fixed, var(--bg-dark);
+  background-size:cover;
+}
+
+.bh-wrap{
+  display:flex;
+  min-height:100vh;
+  backdrop-filter:blur(4px) brightness(1.02);
+}
+
+.bh-sidebar{
+  width:248px;
+  padding:18px 14px;
+  background:linear-gradient(180deg,rgba(10,10,12,0.88),rgba(10,10,12,0.78));
+  border-right:1px solid var(--line);
+  box-shadow:var(--shadow-sm);
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.bh-brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:6px 8px 16px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:6px;
+}
+
+.bh-logo{
+  width:42px;
+  height:42px;
+  object-fit:contain;
+}
+
+.bh-title{
+  font-size:16px;
+  font-weight:600;
+  color:var(--text);
+  letter-spacing:.4px;
+}
+
+.bh-nav{
+  list-style:none;
+  margin:8px 0 0;
+  padding:0;
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+}
+
+.bh-link{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:10px;
+  border-radius:10px;
+  color:var(--text-dim);
+  text-decoration:none;
+  transition:.2s;
+  border:1px solid transparent;
+}
+
+.bh-link:hover{
+  background:var(--bg-glass);
+  border-color:var(--line);
+  color:var(--text);
+  box-shadow:var(--shadow-sm);
+}
+
+.bh-link.active{
+  background:linear-gradient(180deg,var(--gold-3),var(--gold-2));
+  color:#000;
+  font-weight:600;
+  box-shadow:var(--shadow);
+}
+
+.bh-spacer{flex:1;}
+
+.bh-main{
+  flex:1;
+  padding:22px;
+  display:flex;
+  flex-direction:column;
+  gap:18px;
+}
+
+.bh-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 16px;
+  background:var(--bg-panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow-sm);
+  backdrop-filter:blur(8px);
+}
+
+.bh-h1{
+  margin:0;
+  font-size:22px;
+  font-weight:600;
+  color:var(--text);
+}
+
+.bh-grid{
+  display:grid;
+  grid-template-columns:repeat(12,1fr);
+  gap:16px;
+}
+
+.bh-card{
+  grid-column:span 4;
+  background:var(--bg-panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:16px;
+}
+
+.bh-card h3{margin:0 0 8px;font-size:16px;color:var(--text);}
+.bh-kpi{font-size:28px;font-weight:700;}
+.bh-kpi.ok{color:var(--ok);}
+.bh-kpi.warn{color:var(--warn);}
+.bh-kpi.err{color:var(--err);}
+
+.bh-panel{
+  grid-column:1 / -1;
+  background:var(--bg-panel);
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:0;
+  overflow:hidden;
+}
+
+.bh-table{
+  width:100%;
+  border-collapse:collapse;
+  font-size:14px;
+}
+
+.bh-table thead th{
+  text-align:left;
+  padding:12px 14px;
+  font-weight:600;
+  color:var(--text);
+  background:rgba(255,255,255,0.06);
+  border-bottom:1px solid var(--line);
+}
+
+.bh-table tbody td{
+  padding:12px 14px;
+  color:var(--muted);
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+
+.bh-table tbody tr:hover{
+  background:rgba(255,255,255,0.04);
+}
+
+@media(max-width:1100px){
+  .bh-card{grid-column:span 6;}
+}
+
+@media(max-width:720px){
+  .bh-sidebar{width:210px;}
+  .bh-card{grid-column:span 12;}
+  .bh-header{flex-direction:column;gap:10px;align-items:flex-start;}
+}

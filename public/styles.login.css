@@ -1,0 +1,53 @@
+/* LOGIN PAGE — Bighorn Portal */
+
+body.login-page {
+  margin: 0;
+  height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: url("/images/bighorn-portal-1.png") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Frosted Login Box */
+.login-box {
+  width: 420px;
+  padding: 40px 40px 32px;
+  background: rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(8px) brightness(1.05);
+  border-radius: 12px;
+  text-align: center;
+}
+
+/* Logo */
+.login-logo {
+  width: 145px;
+  margin-bottom: 25px;
+}
+
+/* Inputs */
+.login-box input {
+  width: 100%;
+  padding: 14px 14px;
+  margin-bottom: 14px;
+  border-radius: 8px;
+  border: none;
+  background: rgba(255, 255, 255, 0.35);
+  color: white;
+  font-size: 15px;
+}
+
+/* Button */
+.login-box button {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(90deg, #c7a052, #e3c06d);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+}

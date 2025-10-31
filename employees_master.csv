@@ -1,0 +1,6 @@
+account_name,employee_id,first_name,last_name,email,role,voucher_code,voucher_value,voucher_expiration,active
+CHS Refinery,20001,Angela,Packard,angela.packard@chsinc.com,ADMIN,,,
+P66 Refinery,20002,Joe,Gustafson,jrgustafson@gmail.com,ADMIN,,,
+Par Montana Refinery,20003,Sheanna,Cali,scali@parpacific.com,ADMIN,,,
+Haralson Consulting,1,Trent,Haralson,trent@haralson-consulting.com,ADMINISTRATOR,,
+BigHorn Boot and Work Warehouse,2,Ethan,Fornshell,ethanfornshell@bhboot.com,ADMINISTRATOR,,

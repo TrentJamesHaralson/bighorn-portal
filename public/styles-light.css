@@ -1,0 +1,103 @@
+/* ===== LOGIN PAGE (Light Minimal Blur – Final Top Trim v8) ===== */
+body.login-page {
+  margin: 0;
+  height: 100vh;
+  background: url("images/bighorn-portal-1.png") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* Frosted login panel */
+.login-box {
+  backdrop-filter: blur(8px) brightness(1.05);
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  padding: 12px 26px 18px 26px; /* reduced top padding */
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.25);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 245px;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+
+/* Prominent logo */
+.login-logo {
+  width: 130px;
+  margin-bottom: 6px;
+  opacity: 0.97;
+}
+
+/* Compact centered input fields */
+.login-box input {
+  width: 95%;
+  margin: 6px 0;
+  padding: 8px 10px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255, 255, 255, 0.25);
+  color: #000;
+  font-size: 13px;
+  outline: none;
+  backdrop-filter: blur(2px);
+  transition: all 0.2s ease;
+}
+
+.login-box input:focus {
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 0 6px rgba(200, 167, 78, 0.5);
+}
+
+.login-box input::placeholder {
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 400;
+}
+
+/* Gold gradient button */
+.login-box button {
+  width: 95%;
+  margin-top: 10px;
+  padding: 10px;
+  background: linear-gradient(180deg, #d4b455 0%, #b89642 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.25);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Shimmer animation */
+.login-box button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+  transform: skewX(-25deg);
+  transition: all 0.6s ease;
+}
+
+.login-box button:hover::before {
+  left: 125%;
+}
+
+.login-box button:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(200, 167, 78, 0.45);
+}
+
+.login-box button:active {
+  transform: translateY(1px);
+  box-shadow: 0 2px 6px rgba(200, 167, 78, 0.3);
+}
