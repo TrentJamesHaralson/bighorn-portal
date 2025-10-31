@@ -1,26 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bighorn Portal Login</title>
-
-  <!-- Default stylesheet -->
-  <link rel="stylesheet" href="styles-light.css">
-  <!-- To test variants, switch to styles-light.css or styles-blur.css -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bighorn Portal</title>
+  <link rel="stylesheet" href="/styles-light.css">
 </head>
+
 <body class="login-page">
 
-  <div class="login-container">
-    <div class="login-box">
-      <img src="images/logo.white.png" alt="Bighorn Logo" class="login-logo">
+  <div class="login-box">
+    <img src="/images/bighorn-portal-1.png" class="login-logo" alt="Bighorn Logo">
 
-      <form>
-        <input type="email" placeholder="Email" required>
-        <input type="password" placeholder="Password" required>
-        <button type="submit">Sign In</button>
-      </form>
-    </div>
+    <form method="post" action="/login">
+      <input type="email" name="email" placeholder="Email" required>
+      <input type="password" name="password" placeholder="Password" required>
+      <button type="submit">Sign In</button>
+    </form>
   </div>
 
 </body>
