@@ -4,13 +4,58 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Bighorn Portal</title>
+  
+  <!-- keep existing CSS to avoid breaking layout -->
   <link rel="stylesheet" href="/styles-light.css">
-</head>
 
+  <!-- add your modern styling without overwriting global -->
+  <style>
+    body.login-page {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f2f3f5;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+    .login-box {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+      padding: 60px 65px;
+      max-width: 520px;
+      width: 100%;
+      text-align: center;
+    }
+    .login-box img {
+      width: 105%;
+      margin-left: -2.5%;
+      margin-bottom: 45px;
+    }
+    .login-box input {
+      height: 38px;
+      font-size: 0.95rem;
+    }
+    .login-box button {
+      background-color: #002b5c;
+      border: none;
+      height: 40px;
+      font-size: 0.95rem;
+      width: 100%;
+      margin-top: 10px;
+      color: #fff;
+      cursor: pointer;
+    }
+    .login-box button:hover {
+      background-color: #001f45;
+    }
+  </style>
+
+</head>
 <body class="login-page">
 
   <div class="login-box">
-    <img src="/images/bighorn-portal-1.png" class="login-logo" alt="Bighorn Logo">
+    <img src="/images/bighorn-portal-1.png" alt="Bighorn Logo">
 
     <form method="post" action="/login">
       <input type="email" name="email" placeholder="Email" required>
